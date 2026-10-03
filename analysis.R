@@ -42,8 +42,7 @@ arrivals |>
 
 ggsave("figures/arrivals-monthly.png", width = 8, height = 5)
 
-# Smoothed series. A trailing 12-month mean removes the seasonal cycle and
-# never moves ahead of the data, so the covid drop is not anticipated.
+# Smoothed series.
 arrivals_smoothed <- arrivals |>
   arrange(country, date) |>
   mutate(
@@ -75,8 +74,7 @@ arrivals_smoothed |>
 
 ggsave("figures/arrivals-monthly-smoothed.png", width = 8, height = 5)
 
-# Yearly series. Calendar years; the data are monthly, so ISO years do not
-# apply. Country-years without 12 observed months (e.g. 2026) are dropped.
+# Yearly series.
 arrivals_yearly <- arrivals |>
   mutate(year = year(date)) |>
   summarize(
@@ -106,7 +104,7 @@ arrivals_yearly |>
 ggsave("figures/arrivals-yearly.png", width = 8, height = 5)
 
 
-## Monthly percents
+## Monthly percents. Bad because the scales is bounded on one side but not the other.
 arrivals_yoy |>
   filter(
     country %in% focal_countries
@@ -125,9 +123,7 @@ arrivals_yoy |>
 
 ggsave("figures/arrivals-yoy.png", width = 8, height = 5)
 
-## Monthly arrivals relative to the same month in 2019. Year-over-year change
-## is bounded at -100% but unbounded above, so the post-covid rebound swamps
-## the decline. A fixed pre-covid baseline avoids that.
+## Monthly arrivals relative to the same month in 2019. Year-over-year change.
 arrivals_vs_2019 <- arrivals |>
   mutate(month = month(date)) |>
   left_join(
