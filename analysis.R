@@ -3,7 +3,6 @@ library(socviz)
 library(kjhmisc)
 library(scales)
 
-# Caption at half the theme default (0.9 of base size)
 theme_set(
   myriad::theme_socviz_kjh() +
     theme(plot.caption = element_text(size = rel(0.65)))
